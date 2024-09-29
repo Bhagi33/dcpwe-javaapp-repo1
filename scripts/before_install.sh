@@ -1,2 +1,2 @@
 #!/bin/bash
-rm -rf /usr/share/tomcat/webapps/loksaieta*
+rm -rf /opt/tomcat/webapps/loksaieta*
