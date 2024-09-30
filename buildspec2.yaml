@@ -17,4 +17,5 @@ artifacts:
   files:
     - target/loksaieta.war
     - 'aws-cicd-k8s-dep.yaml'
+    - 'appspec.yml'
     - 'Dockerfile'
