@@ -4,6 +4,8 @@ os: linux
 files:
   - source: target/loksaieta.war
     destination: /opt/tomcat/webapps
+  - source: aws-cicd-k8s-dep.yaml
+    destination: /home/devopsadmin
 hooks:
   BeforeInstall:
     - location: scripts/before_install.sh
