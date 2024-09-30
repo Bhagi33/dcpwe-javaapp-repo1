@@ -21,4 +21,4 @@ artifacts:
     - 'scripts/start_server.sh'
     - 'scripts/stop_server.sh'
     - 'aws-cicd-k8s-dep.yaml'
-	  - 'Dockerfile'
+    - 'Dockerfile'
