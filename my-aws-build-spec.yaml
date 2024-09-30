@@ -9,6 +9,8 @@ phases:
     commands:
       - echo "Docker login"
       - docker login -u bhagi99 --password-stdin dckr_pat_m-xF44gR1b7LT17KslmwgmPuJdE
+       - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       
   build:
     commands:
@@ -16,12 +18,19 @@ phases:
       - mvn clean package
       - echo "Docker build Job"
       - docker build -t aws-cicd-app:latest -f Dockerfile .
+  
+      - echo Building the Docker image...
+      - docker build -t my-app .
+      - echo Tagging the Docker image...
+      - docker tag my-app:latest 565393049383.dkr.ecr.us-east-1.amazonaws.com/aws-devops-repo1:lates
 
   post_build:
     commands:
       - echo "pushing the docker image"
       - docker tag aws-cicd-app:latest bhagi99/aws-cicd-pipeline-images:latest
       - docker push bhagi99/aws-cicd-pipeline-images:latest
+      - echo Pushing the Docker image to Amazon ECR...
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/my-app:latest
       - kubectl apply -f aws-cicd-k8s-dep.yaml
 
   
