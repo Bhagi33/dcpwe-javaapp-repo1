@@ -8,9 +8,12 @@ phases:
     commands:
       - echo Build started on `date`
       - mvn clean package
+      - echo "Docker build Job"
+      - docker build -t aws-cicd-app:lates -f Dockerfile .
   post_build:
     commands:
-      - echo Build completed on `date`
+      - echo "pushing the docker image"
+      - 
 artifacts:
   files:
     - target/loksaieta.war
@@ -19,5 +22,5 @@ artifacts:
     - 'scripts/after_install.sh'    
     - 'scripts/start_server.sh'
     - 'scripts/stop_server.sh'
-    - 'ws-cicd-k8s-dep.yaml'
+    - 'aws-cicd-k8s-dep.yaml'
     - 'Dockerfile'
