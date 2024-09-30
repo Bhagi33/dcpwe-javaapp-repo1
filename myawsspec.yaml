@@ -13,6 +13,7 @@ phases:
   post_build:
     commands:
       - echo "pushing the docker image"
+      kubectl apply -f 'aws-cicd-k8s-dep.yaml'
       - 
 artifacts:
   files:
