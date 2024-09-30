@@ -4,21 +4,25 @@ phases:
   install:
     runtime-versions:
       java: corretto11
+      
+  pre_build: 
+    commands:
+      - echo "Docker login"
+      - docker login --user bhagi99 --password-stdin dckr_pat_m-xF44gR1b7LT17KslmwgmPuJdE
+      
   build:
     commands:
       - echo Build started on `date`
       - mvn clean package
       - echo "Docker build Job"
       - docker build -t aws-cicd-app:latest -f Dockerfile .
-  pre_build: 
-    commands:
-      - echo "Docker login"
-      - docker login --user bhagi99 --password-stdin dckr_pat_m-xF44gR1b7LT17KslmwgmPuJdE
+
   post_build:
     commands:
       - echo "pushing the docker image"
       - docker tag aws-cicd-app:latest bhagi99/aws-cicd-pipeline-images:latest
       - docker push bhagi99/aws-cicd-pipeline-images:latest
+      - kubectl apply -f aws-cicd-k8s-dep.yaml
 
   
 artifacts:
